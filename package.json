@@ -1,0 +1,46 @@
+{
+    "name": "migrato",
+    "version": "1.0.0",
+    "description": "Lightweight, customizable migration utility to migrate from one json schema to another.",
+    "author": "Simon Reinisch <trash@reinisch.io>",
+    "license": "MIT",
+    "main": "./dist/migrato.umd.cjs",
+    "module": "./dist/migrato.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "import": "./dist/migrato.js",
+            "require": "./dist/migrato.umd.cjs"
+        }
+    },
+    "scripts": {
+        "build": "vite build && tsc",
+        "lint": "eslint './{src,test}/**/*.ts'",
+        "lint:fix": "npm run lint -- --fix",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "test:coverage": "vitest --coverage",
+        "test:ci": "npm run lint:fix && npm run test && npm run build"
+    },
+    "repository": "git+https://github.com/Simonwep/migrato.git",
+    "bugs":  "https://github.com/Simonwep/migrato/issues",
+    "homepage": "https://github.com/Simonwep/migrato#readme",
+    "keywords": [
+        "migration",
+        "migrator",
+        "json",
+        "json-schema",
+        "json-migration"
+    ],
+    "devDependencies": {
+        "@types/node": "^18.11.17",
+        "@typescript-eslint/eslint-plugin": "^5.47.0",
+        "@typescript-eslint/parser": "^5.47.0",
+        "@vitest/coverage-c8": "^0.26.2",
+        "cross-env": "^7.0.3",
+        "eslint": "^8.30.0",
+        "typescript": "^4.9.4",
+        "vitest": "^0.26.2",
+        "vite": "^4.0.3"
+    }
+}
