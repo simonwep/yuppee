@@ -1,5 +1,4 @@
 import {defineConfig} from 'vite';
-import {version} from './package.json'
 
 export default defineConfig({
     build: {
@@ -8,9 +7,5 @@ export default defineConfig({
             entry: 'src/index.ts',
             name: 'Migrato',
         }
-    },
-
-    define: {
-        'import.meta.env.VERSION': version
     }
 })

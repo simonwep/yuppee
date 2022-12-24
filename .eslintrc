@@ -12,5 +12,9 @@
         "project": "./tsconfig.json",
         "sourceType": "module",
         "ecmaVersion": 2022
+    },
+    "rules": {
+        "@typescript-eslint/no-explicit-any": "off",
+
     }
 }
