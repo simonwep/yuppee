@@ -85,6 +85,25 @@ test('Throw error if the version to migrate is too high', () => {
     ).toThrow();
 });
 
+test('Throw error if a migration is missing', () => {
+    const migrate = createMigrator([
+        createMigration<StateV2, StateV3>({
+            from: 2,
+            to: 3,
+            migrate: (from) => ({
+                version: 3,
+                data: {names: from.names}
+            })
+        })
+    ]);
+
+    expect(() =>
+        migrate({
+            version: 1
+        } as any)
+    ).toThrow();
+});
+
 test('Perform no transformation if version is already the highest', () => {
     const migrate = createMigrator([
         createMigration<StateV1, StateV2>({

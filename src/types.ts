@@ -1,5 +1,7 @@
 /* Every schema hast to implement this interface. */
-export type MigratableState = { version: number };
+export type MigratableState<Version extends number = number> = {
+    version: Version;
+};
 
 /* Specifies a single migration from one version to another. */
 export interface Migration<
