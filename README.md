@@ -51,26 +51,32 @@ type StateV3 = { version: 3, data: { names: string[] } };
 // It's an alias to the latest version and can be re-mapped on every update.
 type State = StateV3;
 
-const migrate = createMigrator([
-    createMigration<StateV1, StateV2>({
-        from: 1,
-        to: 2,
-        migrate: (state) => ({
-            version: 2,
-            names: state.name ? [state.name] : []
+const migrate = createMigrator({
+    init: (): StateV1 => ({ version: 1, name: 'baz' }),
+    migrations: [
+        createMigration<StateV1, StateV2>({
+            from: 1,
+            to: 2,
+            migrate: (state) => ({
+                version: 2,
+                names: state.name ? [state.name] : []
+            })
+        }),
+        createMigration<StateV2, StateV3>({
+            from: 2,
+            to: 3,
+            migrate: (state) => ({
+                version: 3,
+                data: { names: state.names }
+            })
         })
-    }),
-    createMigration<StateV2, StateV3>({
-        from: 2,
-        to: 3,
-        migrate: (state) => ({
-            version: 3,
-            data: { names: state.names }
-        })
-    })
-]);
+    ]
+});
 
-/* Logs { version: 3, data: { names: ['foo] } } */
+/* Logs { version: 3, data: { names: ['baz'] } } */
+console.log(migrate());
+
+/* Logs { version: 3, data: { names: ['foo'] } } */
 console.log(migrate({ version: 1, name: 'foo' }));
 
 /* Logs { version: 3, data: { names: ['bar', 'bam'] } } */
