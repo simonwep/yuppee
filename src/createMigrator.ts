@@ -2,14 +2,14 @@ import {MigratableState, Migration} from './types';
 
 type NeverOr<V, D> = [V] extends ([never] | []) ? D : V;
 
-export type ExtractFinalState<T, M extends Migration<any, any>[]> = NeverOr<{
+export type ExtractFinalState<T extends MigratableState, M extends Migration<any, any>[]> = NeverOr<{
     [K in keyof M as 'last']: ReturnType<M[K]['migrate']>;
 }['last'], T>;
 
-export type ExtractFromStates<T, M extends Migration<any, any>[]> =
+export type ExtractFromStates<T extends MigratableState, M extends Migration<any, any>[]> =
     NeverOr<Parameters<M[number]['migrate']>[0], T>;
 
-export interface MigratorOptions<T, M extends Migration<any, any>[]> {
+export interface MigratorOptions<T extends MigratableState, M extends Migration<any, any>[]> {
     migrations?: M;
     init(): T;
 }
@@ -19,7 +19,7 @@ export interface MigratorOptions<T, M extends Migration<any, any>[]> {
  * old version of your state to the newest one.
  * @param options Migration configuration.
  */
-export const createMigrator = <T, M extends Migration<any, any>[] = never>({migrations, init}: MigratorOptions<T, M>) => {
+export const createMigrator = <T extends MigratableState, M extends Migration<any, any>[] = never>({migrations, init}: MigratorOptions<T, M>) => {
     const highestVersion = migrations ? Math.max(...migrations.map((v) => v.to)) : undefined;
 
     return (
