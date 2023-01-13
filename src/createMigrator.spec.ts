@@ -1,23 +1,26 @@
 import {expect, test} from 'vitest';
 import {createMigration, createMigrator} from './index';
 
-type StateV1 = {version: 1, name: string};
-type StateV2 = {version: 2, names: string[]};
-type StateV3 = {version: 3, data: {names: string[]}};
+type StateV1 = { version: 1, name: string };
+type StateV2 = { version: 2, names: string[] };
+type StateV3 = { version: 3, data: { names: string[] } };
+
+type State = StateV3;
 
 test('Example in README', () => {
-    type StateV1 = {version: 1, name?: string};
-    type StateV2 = {version: 2, names: string[]};
-    type StateV3 = {version: 3, data: {names: string[]}};
+    type StateV1 = { version: 1, name?: string };
+    type StateV2 = { version: 2, names: string[] };
+    type StateV3 = { version: 3, data: { names: string[] } };
 
-    const migrate = createMigrator({
-        init: (): StateV1 => ({version: 1, name: 'baz'}),
+    type State = StateV3;
+
+    const migrate = createMigrator<State, StateV1 | StateV2>({
+        init: () => ({name: 'baz'}),
         migrations: [
             createMigration<StateV1, StateV2>({
                 from: 1,
                 to: 2,
                 migrate: (state) => ({
-                    version: 2,
                     names: state.name ? [state.name] : []
                 })
             }),
@@ -25,7 +28,6 @@ test('Example in README', () => {
                 from: 2,
                 to: 3,
                 migrate: (state) => ({
-                    version: 3,
                     data: {names: state.names}
                 })
             })
@@ -44,25 +46,25 @@ test('Example in README', () => {
 });
 
 test('Initialize', () => {
-    const migrate = createMigrator({
-        init: (): StateV1 => ({version: 1, name: 'foo'})
+    const migrate = createMigrator<StateV1>({
+        init: () => ({version: 1, name: 'foo'})
     });
 
-    expect(migrate()).toEqual({
+    const result: StateV1 = migrate();
+    expect(result).toEqual({
         version: 1,
         name: 'foo'
     });
 });
 
 test('Migrate init', () => {
-    const migrate = createMigrator({
-        init: (): StateV1 => ({version: 1, name: 'bar'}),
+    const migrate = createMigrator<State, StateV1 | StateV2>({
+        init: () => ({name: 'foo'}),
         migrations: [
             createMigration<StateV1, StateV2>({
                 from: 1,
                 to: 2,
                 migrate: (from) => ({
-                    version: 2,
                     names: [from.name]
                 })
             }),
@@ -70,30 +72,27 @@ test('Migrate init', () => {
                 from: 2,
                 to: 3,
                 migrate: (from) => ({
-                    version: 3,
                     data: {names: from.names}
                 })
             })
         ]
     });
 
-    expect(
-        migrate()
-    ).toEqual({
+    const result: StateV3 = migrate();
+    expect(result).toEqual({
         version: 3,
-        data: {names: ['bar']}
+        data: {names: ['foo']}
     });
 });
 
 test('Migrate a simple state', () => {
-    const migrate = createMigrator({
-        init: (): StateV1 => ({version: 1, name: 'bar'}),
+    const migrate = createMigrator<State, StateV1 | StateV2>({
+        init: () => ({name: 'foo'}),
         migrations: [
             createMigration<StateV1, StateV2>({
                 from: 1,
                 to: 2,
                 migrate: (from) => ({
-                    version: 2,
                     names: [from.name]
                 })
             }),
@@ -101,27 +100,26 @@ test('Migrate a simple state', () => {
                 from: 2,
                 to: 3,
                 migrate: (from) => ({
-                    version: 3,
-                    data: {names: from.names}
-                })
+                    data: {names: from.names
+                }})
             })
         ]
     });
 
-    expect(
-        migrate({
-            version: 1,
-            name: 'foo'
-        })
-    ).toEqual({
+    const result: StateV3 = migrate({
+        version: 1,
+        name: 'foo'
+    })
+
+    expect(result).toEqual({
         version: 3,
         data: {names: ['foo']}
     });
 });
 
 test('Pick most efficient migration function', () => {
-    const migrate = createMigrator({
-        init: (): StateV1 => ({version: 1, name: 'bar'}),
+    const migrate = createMigrator<State, StateV1 | StateV2>({
+        init: () => ({name: 'foo'}),
         migrations: [
             createMigration<StateV1, StateV2>({
                 from: 1,
@@ -134,33 +132,27 @@ test('Pick most efficient migration function', () => {
                 from: 1,
                 to: 3,
                 migrate: (from) => ({
-                    version: 3,
                     data: {names: [from.name]}
                 })
             })
         ]
     });
 
-    expect(
-        migrate({
-            version: 1,
-            name: 'foo'
-        })
-    ).toEqual({
+    const result: StateV3 = migrate({version: 1, name: 'foo'});
+    expect(result).toEqual({
         version: 3,
         data: {names: ['foo']}
     });
 });
 
 test('Throw error if the version to migrate is too high', () => {
-    const migrate = createMigrator({
-        init: (): StateV1 => ({version: 1, name: 'bar'}),
+    const migrate = createMigrator<State, StateV1 | StateV2>({
+        init: () => ({name: 'foo'}),
         migrations: [
             createMigration<StateV1, StateV2>({
                 from: 1,
                 to: 2,
                 migrate: (from) => ({
-                    version: 2,
                     names: [from.name]
                 })
             })
@@ -175,14 +167,13 @@ test('Throw error if the version to migrate is too high', () => {
 });
 
 test('Throw error if a migration is missing', () => {
-    const migrate = createMigrator({
-        init: (): StateV1 => ({version: 1, name: 'bar'}),
+    const migrate = createMigrator<State, StateV1 | StateV2>({
+        init: () => ({name: 'foo'}),
         migrations: [
             createMigration<StateV2, StateV3>({
                 from: 2,
                 to: 3,
                 migrate: (from) => ({
-                    version: 3,
                     data: {names: from.names}
                 })
             })
@@ -197,14 +188,13 @@ test('Throw error if a migration is missing', () => {
 });
 
 test('Perform no transformation if version is already the highest', () => {
-    const migrate = createMigrator({
-        init: (): StateV1 => ({version: 1, name: 'bar'}),
+    const migrate = createMigrator<State, StateV1 | StateV2>({
+        init: () => ({name: 'foo'}),
         migrations: [
             createMigration<StateV1, StateV2>({
                 from: 1,
                 to: 2,
                 migrate: (from) => ({
-                    version: 2,
                     names: [from.name]
                 })
             })
@@ -213,7 +203,7 @@ test('Perform no transformation if version is already the highest', () => {
 
     const data = {
         version: 2,
-        names: ['foo']
+        names: ['bar']
     };
 
     expect(migrate(data as any)).toEqual(data);

@@ -1,19 +1,19 @@
 /* Every schema hast to implement this interface. */
-export type MigratableState<Version extends number = number> = {
-    version: Version;
-};
+export interface MigratableState<TVersion extends number = number> {
+    version: TVersion;
+}
 
 /* Specifies a single migration from one version to another. */
 export interface Migration<
-    From extends MigratableState,
-    To extends MigratableState
+    TFrom extends MigratableState,
+    TTo extends MigratableState
 > {
     /* Version to migrate from */
-    from: From['version'];
+    from: TFrom['version'];
 
     /* Version to migrate to */
-    to: To['version'];
+    to: TTo['version'];
 
     /* Migration function */
-    migrate(from: From): To;
+    migrate(from: Readonly<TFrom>): Omit<TTo, 'version'>;
 }

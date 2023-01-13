@@ -52,13 +52,12 @@ type StateV3 = { version: 3, data: { names: string[] } };
 type State = StateV3;
 
 const migrate = createMigrator({
-    init: (): StateV1 => ({ version: 1, name: 'baz' }),
+    init: (): StateV1 => ({ name: 'baz' }),
     migrations: [
         createMigration<StateV1, StateV2>({
             from: 1,
             to: 2,
             migrate: (state) => ({
-                version: 2,
                 names: state.name ? [state.name] : []
             })
         }),
@@ -66,7 +65,6 @@ const migrate = createMigrator({
             from: 2,
             to: 3,
             migrate: (state) => ({
-                version: 3,
                 data: { names: state.names }
             })
         })
