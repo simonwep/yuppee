@@ -51,8 +51,8 @@ type StateV3 = { version: 3, data: { names: string[] } };
 // It's an alias to the latest version and can be re-mapped on every update.
 type State = StateV3;
 
-const migrate = createMigrator({
-    init: (): StateV1 => ({ name: 'baz' }),
+const migrate = createMigrator<State, StateV1 | StateV2>({
+    init: () => ({ name: 'baz' }),
     migrations: [
         createMigration<StateV1, StateV2>({
             from: 1,
