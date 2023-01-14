@@ -1,16 +1,16 @@
 {
-    "name": "migrato",
+    "name": "yuppee",
     "version": "0.0.0",
     "description": "Lightweight, customizable migration utility to migrate from one json schema to another.",
     "author": "Simon Reinisch <trash@reinisch.io>",
     "license": "MIT",
-    "main": "./dist/migrato.umd.js",
-    "module": "./dist/migrato.mjs",
+    "main": "./dist/yuppee.umd.js",
+    "module": "./dist/yuppee.mjs",
     "types": "./dist/types/index.d.ts",
     "exports": {
         ".": {
-            "import": "./dist/migrato.mjs",
-            "require": "./dist/migrato.umd.js"
+            "import": "./dist/yuppee.mjs",
+            "require": "./dist/yuppee.umd.js"
         }
     },
     "scripts": {
@@ -25,12 +25,12 @@
     "files": [
         "dist"
     ],
-    "repository": "git+https://github.com/Simonwep/migrato.git",
-    "bugs":  "https://github.com/Simonwep/migrato/issues",
-    "homepage": "https://github.com/Simonwep/migrato#readme",
+    "repository": "git+https://github.com/Simonwep/yuppee.git",
+    "bugs":  "https://github.com/Simonwep/yuppee/issues",
+    "homepage": "https://github.com/Simonwep/yuppee#readme",
     "keywords": [
         "migration",
-        "migrator",
+        "yuppeer",
         "json",
         "json-schema",
         "json-migration"

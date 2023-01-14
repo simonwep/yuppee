@@ -15,15 +15,15 @@
     <a href="https://github.com/sponsors/Simonwep"><img
         alt="Support me"
         src="https://img.shields.io/badge/github-support-6a15cc.svg"></a>
-    <img alt="version" src="https://img.shields.io/npm/v/migrato?color=%233d24c9&label=version">
+    <img alt="version" src="https://img.shields.io/npm/v/yuppee?color=%233d24c9&label=version">
     <a href="https://www.buymeacoffee.com/aVc3krbXQ"><img
         alt="Buy me a coffee"
         src="https://img.shields.io/badge/%F0%9F%8D%BA-buy%20me%20a%20beer-%23FFDD00"></a>
-    <a href="https://github.com/Simonwep/migrato/actions?query=workflow%3ACI"><img
+    <a href="https://github.com/Simonwep/yuppee/actions?query=workflow%3ACI"><img
         alt="Build Status"
-        src="https://github.com/Simonwep/migrato/actions/workflows/main.yml/badge.svg"></a>
-    <img alt="gzip size" src="https://img.badgesize.io/https://cdn.jsdelivr.net/npm/migrato?compression=gzip">
-    <img alt="brotli size" src="https://img.badgesize.io/https://cdn.jsdelivr.net/npm/migrato?compression=brotli">
+        src="https://github.com/Simonwep/yuppee/actions/workflows/main.yml/badge.svg"></a>
+    <img alt="gzip size" src="https://img.badgesize.io/https://cdn.jsdelivr.net/npm/yuppee?compression=gzip">
+    <img alt="brotli size" src="https://img.badgesize.io/https://cdn.jsdelivr.net/npm/yuppee?compression=brotli">
 </p>
 
 ### Summary
@@ -36,11 +36,11 @@ It may be useful if you have settings or very little state that is stored as a s
 Install it using your preferred package manager (taking npm as example):
 
 ```shell
-npm install migrato
+npm install yuppee
 ```
 
 ```ts
-import { createMigration, createMigrator } from 'migrato';
+import { createMigration, createMigrator } from 'yuppee';
 
 // All possible versions your clients may have.
 type StateV1 = { version: 1, name?: string };

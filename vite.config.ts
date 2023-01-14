@@ -5,7 +5,7 @@ export default defineConfig({
         sourcemap: true,
         lib: {
             entry: 'src/index.ts',
-            name: 'Migrato',
+            name: 'Yuppee',
         }
     }
 })
