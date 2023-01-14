@@ -1,6 +1,6 @@
 {
     "name": "yuppee",
-    "version": "0.0.0",
+    "version": "0.1.0",
     "description": "Lightweight, customizable migration utility to migrate from one json schema to another.",
     "author": "Simon Reinisch <trash@reinisch.io>",
     "license": "MIT",
@@ -26,7 +26,7 @@
         "dist"
     ],
     "repository": "git+https://github.com/Simonwep/yuppee.git",
-    "bugs":  "https://github.com/Simonwep/yuppee/issues",
+    "bugs": "https://github.com/Simonwep/yuppee/issues",
     "homepage": "https://github.com/Simonwep/yuppee#readme",
     "keywords": [
         "migration",
