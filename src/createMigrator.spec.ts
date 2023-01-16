@@ -47,7 +47,7 @@ test('Example in README', () => {
 
 test('Initialize', () => {
     const migrate = createMigrator<StateV1>({
-        init: () => ({version: 1, name: 'foo'})
+        init: () => ({name: 'foo'})
     });
 
     const result: StateV1 = migrate();

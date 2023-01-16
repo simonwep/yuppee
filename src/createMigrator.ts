@@ -1,8 +1,8 @@
 import {MigratableState, Migration} from './types';
 
-export interface MigratorOptions<TFirstVersion extends MigratableState> {
+export interface MigratorOptions<EAll extends MigratableState> {
     migrations?: Migration<any, any>[];
-    init(): Omit<TFirstVersion, 'version'>;
+    init(): Omit<EAll & {version : 1}, 'version'>;
 }
 
 /**
@@ -13,7 +13,7 @@ export interface MigratorOptions<TFirstVersion extends MigratableState> {
 export const createMigrator = <
     TLatest extends MigratableState,
     EAll extends MigratableState = TLatest,
->({migrations, init}: MigratorOptions<EAll & {version: 1}>) => {
+>({migrations, init}: MigratorOptions<EAll>) => {
     const highestVersion = migrations ? Math.max(...migrations.map((v) => v.to)) : undefined;
 
     return (data: EAll | TLatest = {...init(), version: 1} as EAll): TLatest => {
