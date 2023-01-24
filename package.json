@@ -1,6 +1,6 @@
 {
     "name": "yuppee",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "description": "Lightweight, customizable migration utility to migrate from one json schema to another.",
     "author": "Simon Reinisch <trash@reinisch.io>",
     "license": "MIT",
