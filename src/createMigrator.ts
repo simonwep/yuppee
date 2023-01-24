@@ -1,8 +1,11 @@
 import {MigratableState, Migration} from './types';
 
-export interface MigratorOptions<EAll extends MigratableState> {
+export interface MigratorOptions<
+    EAll extends MigratableState,
+    EFirst = EAll & {version: 1}
+> {
     migrations?: Migration<any, any>[];
-    init(): Omit<EAll & {version : 1}, 'version'>;
+    init(): Omit<EFirst, 'version'>;
 }
 
 /**
