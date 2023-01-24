@@ -17,10 +17,12 @@ export const createMigrator = <
     const highestVersion = migrations ? Math.max(...migrations.map((v) => v.to)) : undefined;
 
     return (data: EAll | TLatest = {...init(), version: 1} as EAll): TLatest => {
-        const sourceVersion = (data as MigratableState | undefined)?.version ?? 1;
+        const sourceVersion = data.version;
         const targetVersion = highestVersion ?? sourceVersion;
 
-        if (sourceVersion > targetVersion) {
+        if (typeof sourceVersion !== 'number') {
+            throw new Error(`Expected object with version number but version was ${sourceVersion}`)
+        } else if (sourceVersion > targetVersion) {
             throw new Error(`Cannot process state with version ${sourceVersion}, highest known version is ${targetVersion}`);
         } else if (sourceVersion === targetVersion) {
             return {...data as TLatest, version: targetVersion};

@@ -187,6 +187,23 @@ test('Throw error if a migration is missing', () => {
     ).toThrow();
 });
 
+test('Throw error if version is missing is missing', () => {
+    const migrate = createMigrator<State, StateV1 | StateV2>({
+        init: () => ({name: 'foo'}),
+        migrations: [
+            createMigration<StateV2, StateV3>({
+                from: 2,
+                to: 3,
+                migrate: (from) => ({
+                    data: {names: from.names}
+                })
+            })
+        ]
+    });
+
+    expect(() => migrate({} as any)).toThrow();
+});
+
 test('Perform no transformation if version is already the highest', () => {
     const migrate = createMigrator<State, StateV1 | StateV2>({
         init: () => ({name: 'foo'}),
