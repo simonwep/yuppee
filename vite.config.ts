@@ -4,7 +4,7 @@ export default defineConfig({
     build: {
         sourcemap: true,
         lib: {
-            entry: 'src/index.ts',
+            entry: 'src/yuppee.ts',
             name: 'Yuppee',
         }
     }

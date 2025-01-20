@@ -1,27 +1,36 @@
 name: Release
 
 on:
-  push:
-    tags:
-      - '*'
+    push:
+        tags:
+            - '*'
 
 jobs:
-  release:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          registry-url: https://registry.npmjs.org/
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+    release:
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout repository
+                uses: actions/checkout@v4
 
-      - name: Install
-        run: npm ci
+            -   name: Setup pnpm
+                uses: pnpm/action-setup@v3
+                with:
+                    version: 9.15.0
 
-      - name: Build
-        run: npm run build
+            -   name: Set up Node.js
+                uses: actions/setup-node@v4
+                with:
+                    node-version: 22
+                    cache: 'pnpm'
+                    registry-url: https://registry.npmjs.org/
+                env:
+                    NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish
-        run: npm publish
+            -   name: Install
+                run: pnpm install --frozen-lockfile
+
+            -   name: Build
+                run: pnpm build
+
+            -   name: Publish
+                run: npm publish

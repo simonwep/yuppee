@@ -2,7 +2,7 @@
     "include": ["src/**/*.ts"],
     "references": [{"path": "./tsconfig.node.json"}],
     "compilerOptions": {
-        "declarationDir": "dist/types",
+        "declarationDir": "dist",
         "declaration": true,
         "target": "esnext",
         "useDefineForClassFields": true,

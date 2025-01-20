@@ -1,5 +1,5 @@
 import {expect, test} from 'vitest';
-import {createMigration, createMigrator} from './index';
+import {createMigration, createMigrator} from './yuppee';
 
 type StateV1 = { version: 1, name: string };
 type StateV2 = { version: 2, names: string[] };
