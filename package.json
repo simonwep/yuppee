@@ -4,18 +4,19 @@
     "description": "Lightweight, customizable migration utility to migrate from one json schema to another.",
     "author": "Simon Reinisch <trash@reinisch.io>",
     "license": "MIT",
+    "type": "module",
     "packageManager": "pnpm@9.15.0",
     "engines": {
         "node": "^22"
     },
-    "main": "./dist/yuppee.umd.js",
-    "module": "./dist/yuppee.mjs",
     "types": "./dist/yuppee.d.ts",
+    "main": "./dist/yuppee.umd.cjs",
+    "module": "./dist/yuppee.js",
     "exports": {
         ".": {
-            "import": "./dist/yuppee.mjs",
-            "require": "./dist/yuppee.umd.js",
-            "types": "./dist/yuppee.d.ts"
+            "types": "./dist/yuppee.d.ts",
+            "import": "./dist/yuppee.js",
+            "require": "./dist/yuppee.umd.cjs"
         }
     },
     "scripts": {
@@ -41,15 +42,15 @@
         "json-migration"
     ],
     "devDependencies": {
-        "@eslint/js": "9.13.0",
-        "@types/node": "22.8.1",
-        "@typescript-eslint/parser": "8.11.0",
+        "@eslint/js": "9.18.0",
+        "@types/node": "22.10.7",
+        "@typescript-eslint/parser": "8.20.0",
         "@vitest/coverage-c8": "0.26.2",
         "cross-env": "7.0.3",
-        "eslint": "9.13.0",
-        "typescript": "5.6.3",
-        "typescript-eslint": "8.11.0",
-        "vite": "5.4.10",
-        "vitest": "2.1.3"
+        "eslint": "9.18.0",
+        "typescript": "5.7.3",
+        "typescript-eslint": "8.20.0",
+        "vite": "6.0.7",
+        "vitest": "3.0.2"
     }
 }
